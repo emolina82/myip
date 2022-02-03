@@ -12,7 +12,7 @@ func main() {
 
 	router := gin.Default()
 
-	//router.SetTrustedProxies([]string{"1.1.1.1"})
+	router.SetTrustedProxies([]string{"1.1.1.1"})
 
 	router.GET("/ip", service.GetIps)
 	router.GET("/ip/:id", service.GetIpById)
