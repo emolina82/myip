@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myip-deployment
+  namespace: golang-ns
+  labels:
+    app: myip
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myip
+  template:
+    metadata:
+      labels:
+        app: myip
+        role: myip
+    spec:
+      containers:
+      - name: myip
+        image: localhost:5000/myip:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080

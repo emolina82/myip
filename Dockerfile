@@ -1,17 +1,29 @@
-FROM golang:latest
+FROM golang:latest AS builder
+
+RUN apt-get update
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
 
 RUN mkdir /build
 RUN mkdir /build/myip
 WORKDIR /build/myip
 
-RUN export GO111MODULE=on 
 #RUN go get github.com/emolina82/myip
 #RUN cd /build && git clone https://github.com/emolina82/myip.git
+#EXPOSE 8080 - No necesario
 
 COPY . .
 
-RUN cd /build/myip/src/ && go build
+RUN cd /build/myip/src/ && go mod download && go build
 
-EXPOSE 8080
 
-ENTRYPOINT [ "/build/myip/src/myip" ]
+
+
+FROM scratch
+
+COPY --from=builder /build/myip/src/ .
+
+
+ENTRYPOINT [ "./myip" ]
