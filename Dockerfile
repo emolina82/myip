@@ -22,8 +22,10 @@ RUN cd /build/myip/src/ && go mod download && go build
 
 
 FROM scratch
+#FROM golang:latest
 
-COPY --from=builder /build/myip/src/ .
 
+COPY --from=builder /build/myip/src/myip bin/myip
+COPY certs certs
 
-ENTRYPOINT [ "./myip" ]
+ENTRYPOINT [ "./bin/myip" ]

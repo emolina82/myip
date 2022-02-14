@@ -1,5 +1,5 @@
 
-# arrancar deployment
+# Arrancar deployment
 
 
 kubectl.exe apply -f namespace.yml # existe alternativa por comando
@@ -12,7 +12,7 @@ kubectl.exe -n golang-ns get po
 
 
 
-# Levantar registro local para no subir a docker hup
+# Levantar registro local para no subir a docker hub
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
 docker tag myip localhost:5000/myip
@@ -21,6 +21,8 @@ docker push localhost:5000/myip
 
 
 
+# Otros kubectl
+
 kubectl.exe apply -f service.yml # existe alternativa por comando
 
 kubectl.exe -n golang-ns describe svc myip-entrypoint
@@ -28,3 +30,10 @@ kubectl.exe -n golang-ns describe svc myip-entrypoint
 
 
 http://localhost:30001/ip
+
+
+# Docker
+
+docker build -t myip .
+
+docker run --rm -p 8080:8080 -tid myip

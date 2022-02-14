@@ -2,51 +2,51 @@
 package service
 
 import (
+	"encoding/json"
+	"errors"
 	"myip/domain/model"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
 )
 
 // GetIps
-func GetIps(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, model.Ips)
+func GetIps() []model.Ip {
+	return model.Ips
 }
 
 // GetIpById
-func GetIpById(c *gin.Context) {
-	id := c.Param("id")
+func GetIpById(id string) (model.Ip, error) {
 
 	for _, a := range model.Ips {
 		if a.Id == id {
-			c.IndentedJSON(http.StatusOK, a)
-			return
+			return a, nil
 		}
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "ip not found"})
+	return model.Ip{}, errors.New("not found")
 }
 
 // PostIp
-func PostIp(c *gin.Context) {
-	var newIp model.Ip
+func PostIp(v interface{}) error {
 
-	// newIp.
-	if err := c.BindJSON(&newIp); err != nil {
-		return
+	if res, err := json.Marshal(v); err == nil {
+
+		var newIp model.Ip
+
+		if err := json.Unmarshal(res, &newIp); err == nil {
+			// Add the new ip to the slice.
+			model.Ips = append(model.Ips, newIp)
+
+			return nil
+		}
+
 	}
 
-	// Add the new ip to the slice.
-	model.Ips = append(model.Ips, newIp)
-	c.IndentedJSON(http.StatusCreated, newIp)
+	return errors.New("unreconized format")
 }
 
 // DeleteIpById
-func DeleteIpById(c *gin.Context) {
+func DeleteIpById(id string) error {
 	var newIps = []model.Ip{}
 
 	found := false
-
-	id := c.Param("id")
 
 	for _, a := range model.Ips {
 		if a.Id == id {
@@ -58,11 +58,10 @@ func DeleteIpById(c *gin.Context) {
 	}
 
 	if !found {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "ip not found"})
-		return
+		return errors.New("not found")
 
 	}
 
 	model.Ips = newIps
-	c.IndentedJSON(http.StatusOK, gin.H{"message": "delete"})
+	return nil
 }
