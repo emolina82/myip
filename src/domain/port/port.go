@@ -2,12 +2,11 @@
 package port
 
 import (
-	"encoding/json"
-	"errors"
 	"myip/domain/model"
+	"myip/secondary/repository"
 )
 
 // GetMyIpPort
 func GetMyIpPort() model.Ip {
-	return nil
+	return repository.GetMyIpRepo()
 }
