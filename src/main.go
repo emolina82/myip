@@ -18,6 +18,7 @@ func main() {
 
 	router.GET("/ip", handler.GetIpsHandler)
 	router.GET("/ip/:id", handler.GetIpByIdHandler)
+	router.GET("/ip?mine=:mine", handler.GetMyIpHandler)
 	router.POST("/ip", handler.PostIPHandler)
 	router.DELETE("/ip/:id", handler.DeleteIpByIdHandler)
 

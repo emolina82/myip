@@ -23,6 +23,15 @@ func GetIpById(id string) (model.Ip, error) {
 	return model.Ip{}, errors.New("not found")
 }
 
+// GetMyIp
+func GetMyIp() model.Ip {
+	//Place your code hear, call port
+
+	var myIp model.Ip
+
+	return myIp
+}
+
 // PostIp
 func PostIp(v interface{}) error {
 

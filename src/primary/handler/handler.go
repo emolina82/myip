@@ -26,6 +26,11 @@ func GetIpByIdHandler(c *gin.Context) {
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "ip not found"})
 }
 
+// GetMyIpHandler
+func GetMyIpHandler(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, service.GetMyIp())
+}
+
 // PostIPHandler
 func PostIPHandler(c *gin.Context) {
 
