@@ -10,6 +10,14 @@ import (
 
 // GetIpsHandler
 func GetIpsHandler(c *gin.Context) {
+
+	own := c.Query("own")
+
+	if own == "true" {
+		GetMyIpHandler(c)
+		return
+	}
+
 	c.IndentedJSON(http.StatusOK, service.GetIps())
 }
 

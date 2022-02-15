@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"myip/domain/model"
+	"myip/domain/port"
 )
 
 // GetIps
@@ -27,9 +28,7 @@ func GetIpById(id string) (model.Ip, error) {
 func GetMyIp() model.Ip {
 	//Place your code hear, call port
 
-	var myIp model.Ip
-
-	return myIp
+	return port.GetMyIpPort()
 }
 
 // PostIp

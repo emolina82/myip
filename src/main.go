@@ -8,8 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//http://ip-api.com/json
-
 func main() {
 
 	router := gin.Default()
@@ -18,7 +16,7 @@ func main() {
 
 	router.GET("/ip", handler.GetIpsHandler)
 	router.GET("/ip/:id", handler.GetIpByIdHandler)
-	router.GET("/ip?mine=:mine", handler.GetMyIpHandler)
+
 	router.POST("/ip", handler.PostIPHandler)
 	router.DELETE("/ip/:id", handler.DeleteIpByIdHandler)
 
